@@ -1,114 +1,82 @@
 # TaskFlow — Gestor de Tareas
 
-> Aplicación web de gestión de tareas moderna, segura y responsive, construida con HTML5, CSS y Vanilla JavaScript.
+> Aplicación web de gestión de tareas moderna, segura y responsive, construida con HTML5, CSS3 y Vanilla JavaScript.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-Academic-blue?style=flat-square)
 
 ---
 
-## Descripción
+## 🚀 Descripción
 
-**TaskFlow** es un gestor de tareas tipo SaaS diseñado como proyecto académico de alto nivel. Permite crear, completar y eliminar tareas con asignación por email y sistema de prioridades (Baja, Media, Alta, Urgente). Los datos persisten en `localStorage`, y toda la interfaz se actualiza dinámicamente sin recargar la página.
+**TaskFlow** es un gestor de tareas tipo SaaS diseñado como proyecto académico de alto nivel. Permite crear, completar y eliminar tareas con asignación por email y un sistema de prioridades inteligente. 
 
-### Características principales
+La aplicación se enfoca en la **seguridad**, la **experiencia de usuario (UX)** y la **eficiencia del código**, utilizando exclusivamente JavaScript moderno sin dependencias externas.
 
-- **CRUD completo**: Crear, leer, actualizar estado y eliminar tareas.
-- **Persistencia local**: Los datos se guardan automáticamente en `localStorage`.
-- **Seguridad XSS-safe**: Se usa exclusivamente `document.createElement()` + `textContent`. Prohibido `innerHTML`.
-- **Validación avanzada**: Regex para email (`RFC 5322 simplificado`) y nombres de tarea. Sanitización de inputs.
-- **UX moderna**: Toasts no intrusivos, animaciones fluidas, modal de confirmación para Hard Reset.
-- **Mobile-First**: Diseño 100% responsive con breakpoints para móvil, tablet y escritorio.
-- **Delegación de eventos**: Un solo listener en el contenedor `<ul>` para todos los botones de acción.
-- **Iconografía Phosphor Icons**: Librería ligera y moderna.
-- **Tipografía Inter**: Fuente profesional de Google Fonts.
+### ✨ Características principales
+
+- **💎 CRUD Completo**: Sistema intuitivo para crear, leer, marcar como completadas y eliminar tareas.
+- **💾 Persistencia Inteligente**: Los datos se sincronizan automáticamente con `localStorage` para no perder información al cerrar el navegador.
+- **🛡️ Seguridad End-to-End**: Implementación de políticas XSS-safe mediante el uso riguroso de `textContent` y la API del DOM, evitando `innerHTML`.
+- **✅ Validación Robusta**: Motores de validación con Regex para emails (RFC 5322) y nombres de tareas, incluyendo sanitización automática de entradas.
+- **📱 Mobile-First Design**: Interfaz 100% fluida y adaptativa diseñada para ofrecer la mejor experiencia en cualquier dispositivo.
+- **⚡ Rendimiento Optimizado**: Uso de delegación de eventos y manipulación eficiente del DOM para una respuesta instantánea.
+- **🎨 Estética Premium**: Tipografía Inter, iconos de Phosphor Icons y animaciones sutiles que elevan la calidad visual.
 
 ---
 
-## Tecnologías utilizadas
+## 🛠️ Tecnologías utilizadas
 
-| Tecnología | Versión / Detalle | Uso |
+| Tecnología | Categoría | Uso |
 |---|---|---|
-| HTML5 | Semántico | Estructura de la aplicación |
-| CSS3 | Custom Properties, Grid, Flexbox | Diseño responsive y sistema de diseño |
-| JavaScript ES6+ | Vanilla (sin frameworks) | Lógica de negocio, DOM, validaciones |
-| Google Fonts | Inter 400–800 | Tipografía moderna |
-| Phosphor Icons | v2.1.1 (CDN) | Iconos de interfaz |
-| localStorage | Web Storage API | Persistencia de datos |
-| crypto.randomUUID() | Web Crypto API | Generación de IDs únicos |
+| **HTML5** | Estructura | Marcado semántico y accesibilidad. |
+| **CSS3** | Diseño | Custom Properties (Variables), Grid Layout, Flexbox y Animaciones. |
+| **JavaScript ES6+** | Lógica | Programación funcional, manipulación de DOM y validación. |
+| **Google Fonts** | Tipografía | Inter (400–800) para una legibilidad superior. |
+| **Phosphor Icons** | Iconografía | v2.1.1 para una interfaz limpia y moderna. |
+| **Web Storage API** | Datos | `localStorage` para persistencia sin base de datos externa. |
+| **Web Crypto API** | Seguridad | `crypto.randomUUID()` para la generación segura de identificadores. |
 
 ---
 
----
+## 📂 Despliegue y Uso
 
-## Instrucciones de despliegue (GitHub Pages)
-
+### Localmente
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/vicentemrk/Sumativa2.git
-   cd Sumativa2
+   git clone https://github.com/vicentemrk/Sumativa-2-TaskFlow-.git
+   cd Sumativa-2-TaskFlow-
    ```
+2. **Abrir en el navegador:**
+   Simplemente abre el archivo `index.html` en tu navegador favorito o utiliza una extensión como *Live Server*.
 
-2. **Abrir localmente:**
-   Abre `index.html` directamente en tu navegador, o usa un servidor local:
-   ```bash
-   npx serve .
-   ```
-
-3. **Desplegar en GitHub Pages:**
-   - Ve a **Settings → Pages** en tu repositorio de GitHub.
-   - En **Source**, selecciona la rama `main` y la carpeta `/ (root)`.
-   - Haz click en **Save**.
-   - Tu app estará disponible en: `https://vicentemrk.github.io/Sumativa2/`
+### GitHub Pages
+La aplicación está configurada para despliegue automático. Puedes ver la versión en vivo aquí:
+👉 **[Ver TaskFlow en Vivo](https://vicentemrk.github.io/Sumativa-2-TaskFlow-/)**
 
 ---
 
-## Uso de IA
+## 🤖 Uso de IA Generativa
 
-Durante el desarrollo de este proyecto, se utilizó **IA generativa (Google Gemini / Antigravity)** como herramienta de apoyo para:
+Este proyecto integra mejores prácticas sugeridas por **IA (Antigravity)**, destacando:
 
-### 1. Generación de validaciones Regex
-
-**Prompt:**
-> "Genera una expresión regular para validar emails según RFC 5322 simplificado, y otra para nombres de tarea que permita letras Unicode, números y puntuación básica pero bloquee caracteres peligrosos para XSS como `<`, `>`, `\"`, `'`."
-
-**Resultado aplicado:**
-```javascript
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const NAME_REGEX = /^[\p{L}\p{N}\s.,;:!?¿¡()\-–—]{3,120}$/u;
-```
-La IA explicó que el flag `u` habilita soporte Unicode (`\p{L}` para letras en cualquier idioma), lo cual mejoró la accesibilidad del formulario para usuarios hispanohablantes.
-
-### 2. Refactorización de seguridad XSS
-
-**Prompt:**
-> "Revisa mi función de renderizado que usa `innerHTML` para mostrar tareas. ¿Es vulnerable a XSS? Refactoriza para usar solo DOM API segura."
-
-**Mejora aplicada:** Se reemplazó completamente `innerHTML` por `document.createElement()` + `textContent` en la función `crearElementoTarea()`. La IA demostró cómo un payload como `<img src=x onerror=alert('XSS')>` se ejecutaría con `innerHTML` pero se renderizaría como texto inofensivo con `textContent`.
-
-### 3. Estructura del proyecto y buenas prácticas
-
-**Prompt:**
-> "Estructura un task manager con arquitectura modular: funciones de persistencia separadas de funciones CRUD, separadas de funciones de renderizado. Usa delegación de eventos para los botones dentro de la lista."
-
-**Mejora aplicada:** El código se organizó en 9 secciones claramente delimitadas con funciones puras y reutilizables (`obtenerTareas()`, `guardarTareas()`, `renderizarLista()`, etc.), facilitando el mantenimiento y testing.
-
-### 4. Diseño UI/UX premium
-
-**Prompt:**
-> "Diseña un sistema de CSS con custom properties para un task manager tipo SaaS. Incluye paleta de colores para prioridades, sombras suaves, y animaciones de entrada/salida."
-
-**Mejora aplicada:** Se creó un design system completo con tokens CSS (`--color-*`, `--shadow-*`, `--radius-*`), animaciones `slideIn`/`slideOut` para las tareas, y una paleta profesional con colores semánticos para cada nivel de prioridad.
+1. **Seguridad Avanzada**: Refactorización de funciones de renderizado para eliminar vulnerabilidades de XSS persistente.
+2. **Lógica de Validación**: Creación de expresiones regulares de alta precisión para el filtrado de datos.
+3. **Arquitectura Modular**: Organización del código en módulos lógicos (Data, Logic, Render) para máxima mantenibilidad.
+4. **Diseño Visual**: Consultoría en teoría del color y espaciado para lograr un look & feel de producto SaaS real.
 
 ---
 
-## Autor
+## 👤 Autor
 
-**Vicente** — [@vicentemrk](https://github.com/vicentemrk)
+**Vicente** — Desarrollador Full Stack en formación.
+- GitHub: [@vicentemrk](https://github.com/vicentemrk)
 
 ---
 
-## Licencia
+## 📄 Licencia
 
-Este proyecto es de uso académico. Todos los derechos reservados © 2026.
+Este proyecto ha sido desarrollado con fines académicos para la asignatura de Desarrollo Web.
+Todos los derechos reservados © 2026.
