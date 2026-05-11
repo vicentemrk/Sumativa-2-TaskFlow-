@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow — Gestor de tareas moderno, seguro y responsive. Organiza tu equipo con prioridades, asignaciones y seguimiento en tiempo real.">
+  <title>TaskFlow — Gestor de Tareas</title>
+
+  <!-- Favicon (SVG — checklist icon) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><defs><linearGradient id='g' x1='0' y1='0' x2='36' y2='36' gradientUnits='userSpaceOnUse'><stop offset='0%25' stop-color='%23818cf8'/><stop offset='100%25' stop-color='%234f46e5'/></linearGradient></defs><rect width='36' height='36' rx='8' fill='url(%23g)'/><path d='M8.5 12.5l3 3 5.5-6' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/><line x1='20' y1='12' x2='28' y2='12' stroke='white' stroke-width='2' stroke-linecap='round' opacity='.9'/><circle cx='11.5' cy='19.5' r='1.8' fill='white' opacity='.55'/><line x1='20' y1='19.5' x2='27' y2='19.5' stroke='white' stroke-width='2' stroke-linecap='round' opacity='.45'/><circle cx='11.5' cy='26.5' r='1.8' fill='white' opacity='.3'/><line x1='20' y1='26.5' x2='25' y2='26.5' stroke='white' stroke-width='2' stroke-linecap='round' opacity='.25'/></svg>" type="image/svg+xml">
+
+  <!-- Google Fonts: Inter para una tipografía moderna y legible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Remix Icons: librería moderna y completa de iconos -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- HEADER / BARRA SUPERIOR                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">
+        <!-- Logo SVG: checklist icon que representa la app -->
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#818cf8"/>
+                <stop offset="100%" stop-color="#4f46e5"/>
+              </linearGradient>
+            </defs>
+            <!-- Fondo redondeado -->
+            <rect width="36" height="36" rx="8" fill="url(#logo-grad)"/>
+            <!-- Tarea 1: completada (checkmark + línea) -->
+            <path d="M8.5 12.5l3 3 5.5-6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="20" y1="12" x2="28" y2="12" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+            <!-- Tarea 2: pendiente -->
+            <circle cx="11.5" cy="19.5" r="1.8" fill="white" opacity="0.55"/>
+            <line x1="20" y1="19.5" x2="27" y2="19.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+            <!-- Tarea 3: pendiente -->
+            <circle cx="11.5" cy="26.5" r="1.8" fill="white" opacity="0.3"/>
+            <line x1="20" y1="26.5" x2="25" y2="26.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
+          </svg>
+        </div>
+        <h1>TaskFlow</h1>
+      </div>
+      <div class="header-actions">
+        <div class="stats" id="stats-bar">
+          <!-- Se llena dinámicamente con JS -->
+        </div>
+        <button class="btn btn-icon btn-theme-toggle" id="btn-theme-toggle" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema">
+          <i class="ri-moon-line" id="theme-icon"></i>
+        </button>
+        <button class="btn btn-ghost btn-danger" id="btn-hard-reset" title="Reinicio fuerte — borrar todo">
+          <i class="ri-delete-bin-2-line"></i>
+          <span class="btn-label">Reiniciar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- CONTENIDO PRINCIPAL                                -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <main class="app-main">
+
+    <!-- ——————————————————————————————————————————————— -->
+    <!-- FORMULARIO DE NUEVA TAREA                       -->
+    <!-- ——————————————————————————————————————————————— -->
+    <section class="form-section" aria-label="Crear nueva tarea">
+      <div class="section-header">
+        <h2><i class="ri-add-circle-line"></i> Nueva tarea</h2>
+      </div>
+
+      <form id="task-form" novalidate>
+        <div class="form-grid">
+
+          <!-- Campo: Nombre de la tarea -->
+          <div class="form-group" id="group-task-name">
+            <label for="task-name">
+              <i class="ri-text"></i> Nombre de la tarea
+            </label>
+            <input
+              type="text"
+              id="task-name"
+              name="taskName"
+              placeholder="Ej: Diseñar wireframes del dashboard"
+              autocomplete="off"
+              required
+            >
+            <span class="error-message" id="error-task-name"></span>
+          </div>
+
+          <!-- Campo: Asignado a (email) -->
+          <div class="form-group" id="group-task-email">
+            <label for="task-email">
+              <i class="ri-mail-line"></i> Asignado a (email)
+            </label>
+            <input
+              type="email"
+              id="task-email"
+              name="taskEmail"
+              placeholder="Ej: maria@empresa.com"
+              autocomplete="off"
+              required
+            >
+            <span class="error-message" id="error-task-email"></span>
+          </div>
+
+          <!-- Campo: Prioridad -->
+          <div class="form-group" id="group-task-priority">
+            <label for="task-priority">
+              <i class="ri-flag-line"></i> Prioridad
+            </label>
+            <select id="task-priority" name="taskPriority" required>
+              <option value="" disabled selected>Seleccionar prioridad</option>
+              <option value="baja">Baja</option>
+              <option value="media">Media</option>
+              <option value="alta">Alta</option>
+              <option value="urgente">Urgente</option>
+            </select>
+            <span class="error-message" id="error-task-priority"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit" id="btn-submit-task">
+          <i class="ri-add-line"></i>
+          <span>Agregar tarea</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ——————————————————————————————————————————————— -->
+    <!-- FILTROS                                         -->
+    <!-- ——————————————————————————————————————————————— -->
+    <section class="filters-section" aria-label="Filtros de tareas">
+      <button class="filter-chip active" data-filter="todas">
+        <i class="ri-list-check-2"></i> Todas
+      </button>
+      <button class="filter-chip" data-filter="pendiente">
+        <i class="ri-time-line"></i> Pendientes
+      </button>
+      <button class="filter-chip" data-filter="completada">
+        <i class="ri-checkbox-circle-line"></i> Completadas
+      </button>
+    </section>
+
+    <!-- ——————————————————————————————————————————————— -->
+    <!-- LISTA DE TAREAS                                 -->
+    <!-- ——————————————————————————————————————————————— -->
+    <section class="task-list-section" aria-label="Lista de tareas">
+      <ul id="task-list" class="task-list" role="list">
+        <!-- Renderizado dinámicamente por JS -->
+      </ul>
+
+      <!-- Estado vacío -->
+      <div id="empty-state" class="empty-state hidden">
+        <i class="ri-clipboard-line"></i>
+        <p>No hay tareas todavía</p>
+        <span>Crea tu primera tarea usando el formulario</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- MODAL DE CONFIRMACIÓN (Hard Reset)                 -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="modal-reset">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-icon">
+        <i class="ri-error-warning-fill"></i>
+      </div>
+      <h3 id="modal-title">¿Reiniciar todo?</h3>
+      <p>Esta acción eliminará <strong>todas las tareas</strong> y el almacenamiento local de forma permanente. No se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancelar</button>
+        <button class="btn btn-danger" id="modal-confirm">Sí, borrar todo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- CONTENEDOR DE TOASTS                               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- FOOTER                                             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <footer class="app-footer">
+    <p>TaskFlow &copy; 2026 &mdash; Desarrollado por
+      <a href="https://github.com/vicentemrk" target="_blank" rel="noopener noreferrer">vicentemrk</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
