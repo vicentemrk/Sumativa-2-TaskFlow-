@@ -71,7 +71,6 @@ Este proyecto integra mejores prácticas sugeridas por **IA (Antigravity)**, des
 
 ## 👤 Autor
 
-**Vicente** — Desarrollador Full Stack en formación.
 - GitHub: [@vicentemrk](https://github.com/vicentemrk)
 
 ---
