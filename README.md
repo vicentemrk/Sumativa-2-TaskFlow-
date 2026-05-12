@@ -155,5 +155,5 @@ La IA no escribió el diseño conceptual del proyecto — ese viene del requerim
 
 ## 📄 Licencia
 
-Proyecto desarrollado con fines académicos para la asignatura de Desarrollo Web.  
+Proyecto desarrollado con fines académicos.  
 Todos los derechos reservados © 2026.
