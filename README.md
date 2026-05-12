@@ -1,6 +1,6 @@
 # TaskFlow — Gestor de Tareas
 
-> Aplicación web de gestión de tareas moderna, segura y responsive, construida con HTML5, CSS3 y Vanilla JavaScript puro.
+> Gestor tareas moderno, seguro, responsive. HTML5 + CSS3 + Vanilla JS.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -12,82 +12,75 @@
 
 ## 🚀 Descripción
 
-**TaskFlow** es un gestor de tareas tipo SaaS diseñado como proyecto académico de alto nivel. Permite crear, editar, completar, eliminar y exportar tareas con asignación por email, fechas límite y un sistema de prioridades inteligente.
-
-La aplicación se enfoca en la **seguridad**, la **experiencia de usuario (UX)**, la **arquitectura modular** y la **testabilidad del código**, utilizando exclusivamente JavaScript moderno sin dependencias externas.
+**TaskFlow** gestor tareas tipo SaaS, proyecto académico. Crea, edita, completa, elimina y exporta tareas con email, fechas límite y prioridades. Sin dependencias externas.
 
 ---
 
 ## ✨ Características
 
 ### CRUD Completo
-- **Crear** tareas con nombre, email del asignado, prioridad y fecha límite opcional.
-- **Leer** tareas con filtros por estado (todas / pendientes / completadas).
-- **Editar** cualquier campo de una tarea existente a través de un modal dedicado.
-- **Eliminar** tareas individuales con animación de salida, o borrado masivo con confirmación.
-- **Togglear** el estado completada/pendiente directamente desde la lista.
+- **Crear** — nombre, email, prioridad, fecha límite opcional.
+- **Leer** — filtros por estado (todas / pendientes / completadas).
+- **Editar** — modal dedicado, todos los campos.
+- **Eliminar** — individual con animación o borrado masivo con confirmación.
+- **Toggle** — completada/pendiente desde la lista.
 
 ### Búsqueda y Ordenamiento
-- 🔍 **Búsqueda en tiempo real** por nombre o email del asignado.
-- 🔃 **Ordenamiento** por fecha de creación, prioridad o fecha límite.
+- 🔍 **Búsqueda en tiempo real** por nombre o email.
+- 🔃 **Orden** por creación, prioridad o fecha límite.
 
-### Exportación de datos
-- 📥 **Exportar a JSON** — genera un archivo con todas las tareas, descargable con un clic, usando la Web API nativa (`Blob`, `URL.createObjectURL`).
+### Exportación
+- 📥 **Exportar JSON** — `Blob` + `URL.createObjectURL`, descarga con un clic.
 
 ### Calidad y Seguridad
-- 🛡️ **XSS-safe**: uso estricto de `textContent` y la API del DOM, sin `innerHTML`.
-- ✅ **Validación robusta**: Regex para emails (RFC 5322) y nombres con sanitización automática.
-- ♿ **Accesibilidad**: Focus trap en modales (Tab / Shift+Tab / Escape), atributos ARIA.
-- 📱 **Mobile-First**: Interfaz 100% responsive.
+- 🛡️ **XSS-safe**: `textContent` + DOM API, sin `innerHTML`.
+- ✅ **Validación**: Regex RFC 5322 + sanitización automática.
+- ♿ **Accesibilidad**: Focus trap modales (Tab / Shift+Tab / Escape), ARIA.
+- 📱 **Mobile-First**: 100% responsive.
 - 🌙 **Dark Mode**: persistido en localStorage, respeta `prefers-color-scheme`.
 
 ---
 
 ## 🏗️ Arquitectura — Módulos IIFE
 
-El código está organizado en **4 módulos [IIFE](https://developer.mozilla.org/es/docs/Glossary/IIFE)** dentro de `app.js`. El patrón IIFE (Immediately Invoked Function Expression) es el predecesor directo de los módulos ES6: encapsula el estado interno y expone solo una API pública, exactamente como `export` en módulos modernos.
+4 módulos [IIFE](https://developer.mozilla.org/es/docs/Glossary/IIFE) en `app.js`. Encapsula estado interno, expone solo API pública — mismo concepto que `export` en ES6.
 
 ```
 app.js
-├── Store     — Persistencia y CRUD sobre localStorage
-├── Query     — Filtrado, búsqueda y ordenamiento (estado de vista)
-├── Validator — Validación pura de datos, sin acoplamiento al DOM
-└── UI        — Renderizado, toasts, modales y estadísticas
+├── Store     — CRUD sobre localStorage
+├── Query     — Filtrado, búsqueda, ordenamiento (estado vista)
+├── Validator — Validación pura, sin DOM
+└── UI        — Renderizado, toasts, modales, stats
 ```
 
-### Por qué este diseño
-
-| Principio | Aplicación en TaskFlow |
-|-----------|------------------------|
-| **Encapsulación** | Cada módulo oculta su implementación; los callers solo ven la interfaz pública. |
-| **Módulos profundos** | `Validator` tiene una interfaz mínima (`validar(datos) → {ok, errores/datos}`) que oculta toda la lógica de regex y sanitización. |
-| **Separación DOM/Lógica** | `Validator` y `Query` no conocen el DOM → se pueden testear en aislamiento. |
-| **Delegación de eventos** | Un solo listener en `#task-list` maneja todas las acciones (toggle, edit, delete). |
-
-### Diagrama de dependencias
+| Principio | Aplicación |
+|-----------|-----------|
+| **Encapsulación** | Impl oculta, solo API pública visible |
+| **Módulos profundos** | `Validator.validar(datos) → {ok, errores/datos}` — regex + sanitización ocultos |
+| **Sin DOM en lógica** | `Validator` y `Query` testables en aislamiento |
+| **Delegación eventos** | Un listener en `#task-list` maneja toggle/edit/delete |
 
 ```
 DOMContentLoaded
-      │
       ├─► Store    ◄─── UI
       ├─► Query    ◄─── UI
       ├─► Validator ◄── UI
-      └─► UI (renderiza, consume Store + Query + Validator)
+      └─► UI (consume Store + Query + Validator)
 ```
 
 ---
 
 ## 🧪 Tests
 
-El archivo `app.test.js` contiene **11 tests de comportamiento** para los módulos `Validator` y `Query`, escritos sin framework externo.
+`app.test.js` — 13 tests de comportamiento. Sin framework.
 
-**Cómo ejecutarlos:**
-1. Abre `index.html` en el navegador.
-2. Abre la consola (F12).
-3. Copia y pega el contenido de `app.test.js`.
-4. Verás un reporte `✔ PASS / ✘ FAIL` por cada test.
+**Ejecutar:**
+1. Abrir `index.html` en browser.
+2. Consola (F12).
+3. Pegar contenido de `app.test.js`.
+4. Ver reporte `✔ PASS / ✘ FAIL`.
 
-Los tests siguen el ciclo **RED → GREEN → REFACTOR** de TDD y verifican únicamente comportamiento observable a través de la interfaz pública de cada módulo.
+Ciclo TDD: **RED → GREEN → REFACTOR**. Testea solo interfaz pública.
 
 ---
 
@@ -95,55 +88,50 @@ Los tests siguen el ciclo **RED → GREEN → REFACTOR** de TDD y verifican úni
 
 | Tecnología | Uso |
 |---|---|
-| **HTML5 semántico** | Estructura accesible con roles ARIA |
+| **HTML5 semántico** | Estructura, roles ARIA |
 | **CSS3** | Custom Properties, Grid, Flexbox, animaciones |
-| **JavaScript ES6+** | Módulos IIFE, `crypto.randomUUID()`, `Blob`, `URL.createObjectURL` |
+| **JavaScript ES6+** | IIFE, `crypto.randomUUID()`, `Blob`, `URL.createObjectURL` |
 | **Web Storage API** | Persistencia sin backend |
-| **Web Crypto API** | IDs únicos y seguros |
+| **Web Crypto API** | IDs únicos seguros |
 | **Remix Icon** | Iconografía ligera |
-| **Google Fonts — Inter** | Tipografía de alta legibilidad |
+| **Google Fonts — Inter** | Tipografía legible |
 
 ---
 
-## 📂 Estructura de archivos
+## 📂 Estructura
 
 ```
 Sumativa-2-TaskFlow-/
-├── index.html      # Estructura HTML y referencias a recursos
-├── styles.css      # Sistema de diseño completo (tokens, componentes, animaciones)
-├── app.js          # Lógica de la aplicación (módulos Store, Query, Validator, UI)
-├── app.test.js     # Suite de tests de comportamiento (Validator + Query)
-└── README.md       # Este archivo
+├── index.html      # HTML + referencias recursos
+├── styles.css      # Design system (tokens, componentes, animaciones)
+├── app.js          # Store + Query + Validator + UI
+├── app.test.js     # 13 tests comportamiento
+└── README.md
 ```
 
 ---
 
 ## 🚀 Despliegue
 
-### Localmente
 ```bash
 git clone https://github.com/vicentemrk/Sumativa-2-TaskFlow-.git
 cd Sumativa-2-TaskFlow-
-# Abrir index.html directamente en el navegador
-# o usar Live Server en VS Code
+# Abrir index.html o usar Live Server
 ```
 
-### GitHub Pages
-👉 **[Ver TaskFlow en Vivo](https://vicentemrk.github.io/Sumativa-2-TaskFlow-/)**
+👉 **[Ver en vivo — GitHub Pages](https://vicentemrk.github.io/Sumativa-2-TaskFlow-/)**
 
 ---
 
-## 🤖 Uso de IA Generativa (Antigravity)
+## 🤖 IA Generativa (Antigravity)
 
-Este proyecto integra mejoras aplicadas con asistencia de **IA (Antigravity / Google DeepMind)**:
+| Iteración | Contribución |
+|-----------|-------------|
+| **v1** | Estructura, paleta, validaciones básicas |
+| **v2** | XSS-safe, toasts, dark mode |
+| **v3** | Arquitectura IIFE, separación DOM/lógica, focus trap, tests TDD |
 
-| Iteración | Contribución IA |
-|-----------|-----------------|
-| **v1** | Estructura inicial, paleta de colores, validaciones básicas |
-| **v2** | Refactoring XSS-safe, sistema de toasts, dark mode |
-| **v3** | Arquitectura modular IIFE, separación DOM/lógica, focus trap, suite de tests TDD |
-
-La IA no escribió el diseño conceptual del proyecto — ese viene del requerimiento académico. Su rol fue **auditar la arquitectura**, **proponer mejoras de seguridad** y **sugerir patrones de testing**.
+IA auditó arquitectura, seguridad y testing. Diseño conceptual: requerimiento académico.
 
 ---
 
@@ -155,5 +143,4 @@ La IA no escribió el diseño conceptual del proyecto — ese viene del requerim
 
 ## 📄 Licencia
 
-Proyecto desarrollado con fines académicos.  
-Todos los derechos reservados © 2026.
+Proyecto fines académicos. Todos derechos reservados © 2026.
