@@ -18,10 +18,10 @@
 
 ## ✨ Características
 
-### Experiencia Premium (v4.0)
+### Experiencia
 - 🎨 **Electric SaaS UI** — Estética moderna basada en la paleta **Electric Violet** con tipografía **Outfit**.
 - 📱 **Experiencia Mobile-First** — FAB (Botón Flotante) y Bottom Sheet para una gestión táctil ergonómica.
-- ✨ **Design Spells** — Micro-interacciones premium: animaciones spring, efectos de brillo (shimmer) y feedback visual avanzado.
+- ✨ **Design Spells** — Micro-interacciones: animaciones spring, efectos de brillo (shimmer) y feedback visual avanzado.
 - 🌓 **Dark Mode Pro** — Soporte nativo para temas claro y oscuro con persistencia y contrastes optimizados.
 
 ### CRUD & Gestión
